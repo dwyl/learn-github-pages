@@ -67,4 +67,35 @@ you can have your CI being deployed automatically!
 is a Ruby-based site generator 
 which will create HTML and serve our files for us.
 
+> **Note**
+>
+> It's essential to be "crystal clear" about this: 
+> **Microsoft *OWNS* GitHub**. 😢
+> Therefore using GitHub Pages as a publishing tool 
+> means you are trusting Microsoft to:
+> 
+> a) Keep your data and privacy safe.
+> b) Not censor or hide your content because they disagree with your views/beliefs.
+> 
+> We have no reason to suspect/believe that Microsoft is going to delete/censor our content
+> and given that we can store a complete copy of our data in a "safe place" using 
+> [`dwyl/github-backup`](https://github.com/dwyl/github-backup),
+> we feel the risk is acceptable.
+
+
+# Who? 🧍‍♂️
+
+This guide is meant as both 
+an **_internal_ reference** for us **`@dwyl`** <br />
+and a **_fully_ Open Source resource** 
+that _anyone_ can read and learn from.
+
+Publishing sites publicly is in the interest
+of **everyone**. 
+And that should include you!
+
+As always, if you find it helpful/useful please star the repo on GitHub ⭐ 🙏.
+If you get stuck or have any questions/suggestions,
+please [open an issue](https://github.com/dwyl/learn-github-pages/issues).
+
 
