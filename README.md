@@ -33,7 +33,7 @@ on this platform.
 
 So why should you use Github Pages?
 It's a great way to communicate
-with **like-minded** by showcasing your projects,
+with **like-minded people** by showcasing your projects,
 thus contributing to the **Open-Source community**.
 
 - **It's free**. This goes without explanation.
@@ -75,6 +75,7 @@ which will create HTML and serve our files for us.
 > means you are trusting Microsoft to:
 > 
 > a) Keep your data and privacy safe.
+> 
 > b) Not censor or hide your content because they disagree with your views/beliefs.
 > 
 > We have no reason to suspect/believe that Microsoft is going to delete/censor our content
@@ -86,7 +87,7 @@ which will create HTML and serve our files for us.
 # Who? 🧍‍♂️
 
 This guide is meant as both 
-an **_internal_ reference** for us **`@dwyl`** <br />
+an **_internal_ reference** for us at **`@dwyl`**
 and a **_fully_ Open Source resource** 
 that _anyone_ can read and learn from.
 
@@ -113,7 +114,7 @@ in a given *branch* of the repo.
 Regardless, 
 once we set the branch and the folder,
 Github Pages will perform a
-`Github Action` to deploy the default domain -
+`Github Action` to deploy to the default domain -
 `https://<your_account_name>.github.io/<repo_name>` 
 (you can change the domain to a custom one).
 
@@ -141,11 +142,12 @@ to automatically build and deploy our website to Github Pages.
 
 You can check the quickstart guide
 for Github Actions in https://docs.github.com/en/actions/quickstart.
+
 But, in layman's terms,
 you need to have a `.github/workflows` directory in your repo,
 and create `*.yml` files within it.
 **Each of these files will pertain**
-**to the configuration of the workflow**
+**to the configuration of the workflow(s)**
 **that will be executed**.
 
 Here's a practical example
