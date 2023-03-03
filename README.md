@@ -94,8 +94,160 @@ Publishing sites publicly is in the interest
 of **everyone**. 
 And that should include you!
 
+
+# How? 💻
+
+Luckily for you, 
+integrating a deployment pipeline
+to your repo to Github Pages
+is fairly simple!
+It's one of the perks of using it!
+
+Github Pages **needs a source to pull the files from**.
+This can be a specific *folder* 
+in a given *branch* of the repo.
+
+
+<img width="1044" alt="settings" src="https://user-images.githubusercontent.com/17494745/222521320-94cd9c0e-b5ca-48b2-800c-327ef031ebe8.png">
+
+Regardless, 
+once we set the branch and the folder,
+Github Pages will perform a
+`Github Action` to deploy the default domain -
+`https://<your_account_name>.github.io/<repo_name>` 
+(you can change the domain to a custom one).
+
+Take a look at the picture below.
+This action is *automatically executed*
+after hitting the `Save` button on the
+`Settings > Pages` page of the repository.
+In this case,
+we are using the **root files** in the 
+**`gh-pages` branch** 
+to be served as the website.
+
+<img width="1224" alt="image" src="https://user-images.githubusercontent.com/17494745/222522110-6d028bd5-bc25-4577-8669-3aeba6aa6e58.png">
+
+## Automating this process
+
+Depending on the framework/language you are using,
+you can simply create a *release bundle* 
+and manually upload it to the repo on a different branch
+and have it served in a Github Page.
+However, this process is *time inefficient*.
+We could (and *should*!) leverage 
+**Github Actions**
+to automatically build and deploy our website to Github Pages.
+
+You can check the quickstart guide
+for Github Actions in https://docs.github.com/en/actions/quickstart.
+But, in layman's terms,
+you need to have a `.github/workflows` directory in your repo,
+and create `*.yml` files within it.
+**Each of these files will pertain**
+**to the configuration of the workflow**
+**that will be executed**.
+
+Here's a practical example
+of a Github Action workflow file
+to deploy to Github Pages.
+
+```yml
+name: deploy to Github Pages
+on:
+  push:
+    branches: [ main ]
+
+
+permissions:
+  contents: write
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # See stackoverflow.com/questions/74164386/flutter-web-shows-blank-page-on-github-deployment.
+      - name: Install and Build 
+        run: flutter build web --release --web-renderer html
+
+      - name: Deploy to Github Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages # The branch the action should deploy to.
+          folder: ./build/web # The folder the action should deploy.
+```
+
+> **Note**
+>
+> This code is originally from 
+> [`dwyl/app`](https://github.com/dwyl/app/blob/4ae03e4a0afefdf42a5af20c86fbf1790cbd57e5/.github/workflows/deploy.yml).
+> We *highly* encourage you to check it out,
+> and see the [actions](https://github.com/dwyl/app/actions) be executed! 😄
+
+Let's break the code down.
+
+This workflow is only executed 
+when a push commit is made to the `main` branch,
+and has permissions to *write* on the repo.
+
+A `job` called `"build-and-deploy"` 
+is run on an `ubuntu` container, 
+and has several steps.
+
+- the code is [checked out](https://www.atlassian.com/git/tutorials/using-branches/git-checkout#:~:text=The%20git%20checkout%20command%20lets,new%20commits%20on%20that%20branch.)
+(copied) from the repo into the container.
+
+- since the project is 
+[`Flutter`-based](https://flutter.dev/),
+we need to install `Flutter` 
+and fetch the dependencies. 
+This is made by using the 
+[`subosito/flutter-action@v2`](https://github.com/marketplace/actions/flutter-action)
+to install Flutter
+and running `flutter pub get`
+to download the dependencies.
+
+- we *create the release bundle*
+by running `flutter build web --release --web-renderer html`.
+**This will create the bundle inside `build/dev`**.
+
+- finally, we make use of the 
+[`JamesIves/github-pages-deploy-action@v4`](https://github.com/JamesIves/github-pages-deploy-action)
+action to *automatically* deploy the website to GithubPages.
+It pushes and deploys the code found in `./build/web` 
+(the generated release bundle)
+from the `gh-pages` branch.
+
+And that's it!
+You are using the `JamesIves/github-pages-deploy-action@v4`,
+which will do all the heavy lifting for you!
+You just need to tell it 
+*which branch you want to serve the files from*
+and *which repo folder it needs to pull the release bundle from*.
+
+If you check the `gh-pages` branch
+(it *doesn't need to be created prior to running the action,
+it will create it by default if it's not found*),
+you will see that the files are automatically
+pushed to this branch 
+and all ready to be *served* by Github Pages!
+
+<img width="899" alt="final" src="https://user-images.githubusercontent.com/17494745/222711274-b1b0df63-a2b5-41f2-947d-cd45e7dafaa5.png">
+
+
+# Star the repo!
+
 As always, if you find it helpful/useful please star the repo on GitHub ⭐ 🙏.
 If you get stuck or have any questions/suggestions,
 please [open an issue](https://github.com/dwyl/learn-github-pages/issues).
-
-
