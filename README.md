@@ -1,6 +1,6 @@
 <div align="center">
 
-# Learn `Github Page`
+# Learn `GitHub Pages`
 
 
 
